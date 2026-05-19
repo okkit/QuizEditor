@@ -33,17 +33,17 @@ public class RootPanel extends JPanel implements Constants{
 		int x = 10;
 		int y = 10;
 		
-		int height = (int) (APP_WIDTH * 0.2);
+		int height = (int) (APP_HEIGHT * 0.2);
 		inputPanel.setBounds(x, y, width, height);
 		add(inputPanel);
 		
 		y = y + height + 10;
-		height = (int) (APP_WIDTH * 0.52);
+		height = (int) (APP_HEIGHT * 0.56);
 		editorPanel.setBounds(x, y, width, height);
 		add(editorPanel);
 		
 		y = y + height + 10;
-		height = (int) (APP_WIDTH * 0.2);
+		height = (int) (APP_HEIGHT * 0.2);
 		buttonPanel.setBounds(x, y, width, height);
 		add(buttonPanel);
 	}
