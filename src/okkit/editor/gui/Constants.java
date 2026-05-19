@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 public interface Constants {
 
 	public static final int ANSER_NUMBER = 4;
+	public static final int SCORE_NUMBER = 4;
 	
 	public static final String APP_TITLE = "Editor";
 	
