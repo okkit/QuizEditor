@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 
+import okkit.editor.data.dto.Question;
 import okkit.editor.gui.appComponents.AppCheckBox;
 import okkit.editor.gui.appComponents.AppLabel;
+import okkit.editor.gui.appComponents.AppRadioButton;
 import okkit.editor.gui.appComponents.AppSubPanel;
 import okkit.editor.gui.appComponents.AppTextArea;
 import okkit.editor.gui.appComponents.AppTextField;
@@ -19,9 +21,9 @@ import okkit.editor.gui.appComponents.AppTextField;
 public class EditorPanel extends AppSubPanel {
 
 	AppTextArea questionArea = new AppTextArea();
-	AppTextField scoreField = new AppTextField();
 	ArrayList<AppTextField> anserFields = new ArrayList<AppTextField>(ANSER_NUMBER);
 	ArrayList<AppCheckBox> checkBoxes = new ArrayList<AppCheckBox>(ANSER_NUMBER);
+	ArrayList<AppRadioButton> radios = new ArrayList<AppRadioButton>(SCORE_NUMBER);
 	ButtonGroup scoreGroup = new ButtonGroup();
 
 	/**
@@ -53,11 +55,12 @@ public class EditorPanel extends AppSubPanel {
 		int x = APP_WIDTH - 100;
 		AppRadioButton rb;
 		for (int i = 0; i < SCORE_NUMBER; i++) {
-			rb = new AppRadioButton("" + (i + 1));
+			rb = new AppRadioButton(i + 1);
 			rb.setBounds(x, y, 50, 30);
 			add(rb);
 			y += 23;
 			scoreGroup.add(rb);
+			radios.add(rb);
 		}
 
 		label = new AppLabel("Antworten");
@@ -83,6 +86,22 @@ public class EditorPanel extends AppSubPanel {
 			checkBoxes.add(box);
 			y += 30;
 		}
+	}
+
+	public void pack(Question quest) {
+
+		quest.setText(questionArea.getText());
+
+		for (int i = 0; i < SCORE_NUMBER; i++) {
+			if (radios.get(i).isSelected())
+				quest.setScore(radios.get(i).getNumber());
+		}
+		
+
+		for (int i = 0; i < ANSER_NUMBER; i++) {
+			quest.addAnswer(anserFields.get(i).getText(), checkBoxes.get(i).isSelected());
+		}
+
 	}
 
 }

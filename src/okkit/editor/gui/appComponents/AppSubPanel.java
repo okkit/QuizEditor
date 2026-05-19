@@ -7,8 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import okkit.editor.gui.Constants;
+import okkit.editor.gui.app.AppListener;
 
 public class AppSubPanel extends JPanel implements Constants{
+	
+	protected AppListener appListener;
 	
 	public AppSubPanel(boolean bordered) {
 		super();
@@ -22,6 +25,10 @@ public class AppSubPanel extends JPanel implements Constants{
 		add(label);
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
 		super.add(comp);	
+	}
+
+	public void setAppListener(AppListener appListener) {
+		this.appListener = appListener;
 	}
 
 }

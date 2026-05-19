@@ -36,6 +36,11 @@ public class ButtonPanel extends AppSubPanel {
 		add(newButton);
 		add(saveButton);
 		
+		deleteButton.addActionListener(_ -> appListener.deleteQuestion());
+		dublicateButton.addActionListener(_ -> appListener.dublicateQuestion());
+		newButton.addActionListener(_ -> appListener.newQuestion());
+		saveButton.addActionListener(_ -> appListener.saveQuestion());
+		
 		setComponentBounds();
 	}
 
