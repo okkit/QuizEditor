@@ -45,12 +45,12 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 		int x = 10;
 		int y = 10;
 
-		int height = (int) (APP_HEIGHT * 0.2);
+		int height = (int) (APP_HEIGHT * 0.24);
 		inputPanel.setBounds(x, y, width, height);
 		add(inputPanel);
 
 		y = y + height + 10;
-		height = (int) (APP_HEIGHT * 0.56);
+		height = (int) (APP_HEIGHT * 0.55);
 		editorPanel.setBounds(x, y, width, height);
 		add(editorPanel);
 

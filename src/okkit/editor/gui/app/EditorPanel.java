@@ -20,10 +20,10 @@ import okkit.editor.gui.appComponents.AppTextField;
  */
 public class EditorPanel extends AppSubPanel {
 
-	AppTextArea questionArea = new AppTextArea();
-	ArrayList<AppTextField> anserFields = new ArrayList<AppTextField>(ANSER_NUMBER);
-	ArrayList<AppCheckBox> checkBoxes = new ArrayList<AppCheckBox>(ANSER_NUMBER);
-	ArrayList<AppRadioButton> radios = new ArrayList<AppRadioButton>(SCORE_NUMBER);
+	AppTextArea questionArea;
+	ArrayList<AppTextField> anserTextFields = new ArrayList<AppTextField>(ANSER_NUMBER);
+	ArrayList<AppCheckBox> anserCheckBoxes = new ArrayList<AppCheckBox>(ANSER_NUMBER);
+	ArrayList<AppRadioButton> scoreRadioButtons = new ArrayList<AppRadioButton>(SCORE_NUMBER);
 	ButtonGroup scoreGroup = new ButtonGroup();
 
 	/**
@@ -41,65 +41,73 @@ public class EditorPanel extends AppSubPanel {
 	 * Addet die einzelne Elemente
 	 */
 	private void addComponents() {
-		AppLabel label = new AppLabel("Fragentext");
-		label.setBounds(10, 10, 100, 20);
-		add(label);
-		questionArea.setBounds(10, 40, 480, 100);
+		
+		add(new AppLabel("Fragentext", 10, 10, 100, 20));
+		questionArea = new AppTextArea(10, 40, 480, 100);
 		add(questionArea);
 
-		label = new AppLabel("Score");
-		label.setBounds(APP_WIDTH - 100, 10, 60, 30);
-		add(label);
+		add(new AppLabel("Score", APP_WIDTH - 100, 10, 60, 30));
+		addScoreRadioButtons(APP_WIDTH - 100, 40);
 
-		int y = 40;
-		int x = APP_WIDTH - 100;
-		AppRadioButton rb;
-		for (int i = 0; i < SCORE_NUMBER; i++) {
-			rb = new AppRadioButton(i + 1);
-			rb.setBounds(x, y, 50, 30);
-			add(rb);
-			y += 23;
-			scoreGroup.add(rb);
-			radios.add(rb);
-		}
+		add(new AppLabel("Antworten", 10, 150, 100, 20));
+		add(new AppLabel("Richtig", APP_WIDTH - 100, 150, 60, 30));
 
-		label = new AppLabel("Antworten");
-		label.setBounds(10, 150, 100, 20);
-		add(label);
-		label = new AppLabel("Richtig");
-		label.setBounds(APP_WIDTH - 100, 150, 60, 30);
-		add(label);
+		addAnswerComponents(10, 180);
+	}
 
-		x = 10;
-		y = 180;
-
+	/**
+	 * Addet die einzelnen Komponenten beginnend bei der Position x, y 
+	 * @param x Position für Bounds
+	 * @param y Position für Bounds
+	 */
+	private void addAnswerComponents(int x, int y) {
 		AppTextField field;
 		AppCheckBox box;
 		for (int i = 0; i < ANSER_NUMBER; i++) {
-			field = new AppTextField();
-			box = new AppCheckBox();
-			field.setBounds(x, y, 480, 26);
-			box.setBounds(APP_WIDTH - 100, y, 20, 30);
+			field = new AppTextField(x, y, 480, 26);
+			box = new AppCheckBox(APP_WIDTH - 100, y, 20, 30);
 			add(field);
 			add(box);
-			anserFields.add(field);
-			checkBoxes.add(box);
+			anserTextFields.add(field);
+			anserCheckBoxes.add(box);
 			y += 30;
 		}
+
 	}
 
+	/**
+	 * Addet Score-RadioButtons beginnend bei der Position x, y
+	 * @param x
+	 * @param y
+	 */
+	private void addScoreRadioButtons(int x, int y) {
+		AppRadioButton rb;
+		for (int i = 0; i < SCORE_NUMBER; i++) {
+			rb = new AppRadioButton(i + 1, x, y, 50, 30);
+			add(rb);
+			y += 23;
+			scoreGroup.add(rb);
+			scoreRadioButtons.add(rb);
+		}
+
+	}
+
+	/**
+	 * Verpackt den Input in das Question-Objekt
+	 * 
+	 * @param quest
+	 */
 	public void pack(Question quest) {
 
 		quest.setText(questionArea.getText());
 
 		for (int i = 0; i < SCORE_NUMBER; i++) {
-			if (radios.get(i).isSelected())
-				quest.setScore(radios.get(i).getNumber());
+			if (scoreRadioButtons.get(i).isSelected())
+				quest.setScore(scoreRadioButtons.get(i).getNumber());
 		}
-		
 
 		for (int i = 0; i < ANSER_NUMBER; i++) {
-			quest.addAnswer(anserFields.get(i).getText(), checkBoxes.get(i).isSelected());
+			quest.addAnswer(anserTextFields.get(i).getText(), anserCheckBoxes.get(i).isSelected());
 		}
 
 	}
