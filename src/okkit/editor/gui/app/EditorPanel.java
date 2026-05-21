@@ -26,6 +26,8 @@ public class EditorPanel extends AppSubPanel {
 	ArrayList<AppRadioButton> scoreRadioButtons = new ArrayList<AppRadioButton>(SCORE_NUMBER);
 	ButtonGroup scoreGroup = new ButtonGroup();
 
+	private Question currentQuestion;
+
 	/**
 	 * Konstruiert das Panel
 	 * 
@@ -41,7 +43,7 @@ public class EditorPanel extends AppSubPanel {
 	 * Addet die einzelne Elemente
 	 */
 	private void addComponents() {
-		
+
 		add(new AppLabel("Fragentext", 10, 10, 100, 20));
 		questionArea = new AppTextArea(10, 40, 480, 100);
 		add(questionArea);
@@ -56,7 +58,8 @@ public class EditorPanel extends AppSubPanel {
 	}
 
 	/**
-	 * Addet die einzelnen Komponenten beginnend bei der Position x, y 
+	 * Addet die einzelnen Komponenten beginnend bei der Position x, y
+	 * 
 	 * @param x Position für Bounds
 	 * @param y Position für Bounds
 	 */
@@ -77,6 +80,7 @@ public class EditorPanel extends AppSubPanel {
 
 	/**
 	 * Addet Score-RadioButtons beginnend bei der Position x, y
+	 * 
 	 * @param x
 	 * @param y
 	 */
@@ -93,23 +97,61 @@ public class EditorPanel extends AppSubPanel {
 	}
 
 	/**
-	 * Verpackt den Input in das Question-Objekt
+	 * Füllt die einzelnen Komponenten mit den Daten aus dem Question-Objekt
 	 * 
-	 * @param quest
+	 * @param q Question-Objekt
 	 */
-	public void pack(Question quest) {
+	public void showQuestion(Question q) {
+		currentQuestion = q;
+		questionArea.setText(q.getText());
+		for (int i = 0; i < scoreRadioButtons.size(); i++) {
+			scoreRadioButtons.get(i).setSelected(q.getScore() == i + 1);
+		}
+		for (int i = 0; i < q.getAnswers().size(); i++) {
+			anserTextFields.get(i).setText(q.getAnswers().get(i).getText());
+			anserCheckBoxes.get(i).setSelected(q.getAnswers().get(i).isCorrect());
+		}
+	}
 
-		quest.setText(questionArea.getText());
+	/**
+	 * Entfernt den Inhalt der einzelnen Komponenten
+	 * 
+	 */
+	public void clear() {
+		currentQuestion = null;
+		questionArea.setText(null);
+		scoreGroup.clearSelection();
 
-		for (int i = 0; i < SCORE_NUMBER; i++) {
-			if (scoreRadioButtons.get(i).isSelected())
-				quest.setScore(scoreRadioButtons.get(i).getNumber());
+		for (AppTextField atf : anserTextFields) {
+			atf.setText(null);
 		}
 
-		for (int i = 0; i < ANSER_NUMBER; i++) {
-			quest.addAnswer(anserTextFields.get(i).getText(), anserCheckBoxes.get(i).isSelected());
+		for (AppCheckBox acb : anserCheckBoxes) {
+			acb.setSelected(false);
 		}
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Question getCurrentQuestion() {
+		if (currentQuestion == null) {
+
+			currentQuestion = new Question();
+			currentQuestion.setText(questionArea.getText());
+
+			for (int i = 0; i < SCORE_NUMBER; i++) {
+				if (scoreRadioButtons.get(i).isSelected())
+					currentQuestion.setScore(scoreRadioButtons.get(i).getNumber());
+			}
+
+			for (int i = 0; i < ANSER_NUMBER; i++) {
+				currentQuestion.addAnswer(anserTextFields.get(i).getText(),
+						anserCheckBoxes.get(i).isSelected());
+			}
+		}
+		return currentQuestion;
 	}
 
 }

@@ -5,58 +5,48 @@ import okkit.editor.data.dto.Quiz;
 
 public class DataHandler {
 
-	private static final DataHandler instance = new DataHandler();
-	private Quiz currentQuiz;
-	private Question currentQuestion;
+	public Quiz currentQuiz;
+//	public Question currentQuestion;
 	
-	public String saveQuiz() {
-		return null;
-	}
-	
-	public String saveQuestion() {
-		if (!currentQuiz.hasQuestion(currentQuestion))
-			currentQuiz.addQuestion(currentQuestion);
-		return null;
-	}
-	
-	public String[] getQuizList() {
+	public String[] getQuizTitleList() {
 		return QuizList.list;
 	}
+	
+	public Quiz getQuizByTitle(String title) {
 
-	public Quiz loadQuiz(String title) {
-		currentQuiz = new Quiz(title);
+		if (currentQuiz != null) {
+			if (title.equals(currentQuiz.getTitle()))
+				return currentQuiz;
+		}
+		currentQuiz = Serializer.getInstance().loadQuiz(title);
+		if (currentQuiz == null)
+			currentQuiz = new Quiz(title);
 		return currentQuiz;
 	}
 
-	public Question createNewQuestion() {
-		currentQuestion = new Question();
-		return currentQuestion;
+	public Question dublicateQuestion(Question q){
+		return null;
+	}
+	
+	public Question deleteQuestion(Question q) {
+		return null;
+	}
+	
+	public String saveQuestion(Question q) {
+		if (currentQuiz == null)
+			return "Zu welchem Quiz gehört die Frage?";
+		if (!currentQuiz.hasQuestion(q))
+			currentQuiz.addQuestion(q);
+		return saveQuiz();
 	}
 
-	public Question getCurrentQuestion() {
-		if (currentQuestion == null)
-			return createNewQuestion();
-		return currentQuestion;
+//	public Question getCurrentQuestion() {
+//		if (currentQuestion == null)
+//			return createNewQuestion();
+//		return currentQuestion;
+//	}
+//	
+	private String saveQuiz() {
+		return Serializer.getInstance().saveQuiz(currentQuiz);
 	}
-
-	public void setCurrentQuestion(Question currentQuestion) {
-		this.currentQuestion = currentQuestion;
-	}
-
-	public Quiz getQuiz() {
-		return currentQuiz;
-	}
-
-	public void setQuiz(Quiz quiz) {
-		this.currentQuiz = quiz;
-	}
-
-	public static DataHandler getInstance() {
-		return instance;
-	}
-
-	private DataHandler() {
-		super();
-	}
-
 }

@@ -3,6 +3,7 @@ package okkit.editor.gui.appComponents;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import okkit.editor.gui.Constants;
@@ -21,6 +22,10 @@ public class AppSubPanel extends JPanel implements Constants{
 
 	public void setAppListener(AppListener appListener) {
 		this.appListener = appListener;
+	}
+	
+	public void popup(String text) {
+		JOptionPane.showMessageDialog(this, text);
 	}
 
 }

@@ -1,5 +1,8 @@
 package okkit.editor.data.dto;
 
-public abstract class DataTransportObject {
+import java.io.Serializable;
 
+public abstract class DataTransportObject implements Serializable{
+
+	public static final long serialVersionUID = 1L;
 }

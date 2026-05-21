@@ -12,6 +12,7 @@ public class Question extends DataTransportObject {
 	 * bzw der Answer-Objekte.
 	 */
 	private List<Answer> answers = new ArrayList<Answer>();
+	private Quiz quiz;
 
 	// Standardkonstruktor
 	public Question() {
@@ -37,12 +38,7 @@ public class Question extends DataTransportObject {
 	}
 	
 	public String toString() {
-		String str = text + " score " + getScore();
-		str += "\nAnswers\n";
-		for (Answer answer : answers) {
-			str += "\n" + answer.getText() + " - " + answer.isCorrect();
-		}
-		return str;
+		return text;
 	}
 
 	public String getText() {
@@ -67,5 +63,14 @@ public class Question extends DataTransportObject {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
+	}
+
+	public Quiz getQuiz() {
+		return quiz;
 	}
 }

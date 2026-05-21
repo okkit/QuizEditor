@@ -3,6 +3,8 @@
  */
 package okkit.editor.gui.app;
 
+import java.util.List;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,9 +17,10 @@ import okkit.editor.gui.Constants;
  */
 public class RootPanel extends JPanel implements Constants, AppListener {
 
-	InputPanel inputPanel = new InputPanel(true);
+	InputPanel inputPanel;
 	EditorPanel editorPanel = new EditorPanel(true);
 	ButtonPanel buttonPanel = new ButtonPanel(false);
+	DataHandler handler = new DataHandler();
 
 	/**
 	 * Konstruiert das Panel.
@@ -25,6 +28,7 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 	public RootPanel() {
 		super();
 		setLayout(null);
+		inputPanel = new InputPanel(true, handler.getQuizTitleList());
 		addComponents();
 		setListener();
 	}
@@ -62,12 +66,18 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 
 	@Override
 	public String saveQuestion() {
-		Question quest = DataHandler.getInstance().getCurrentQuestion();
-		editorPanel.pack(quest);
-		System.out.println(quest.toString());
-		String error = DataHandler.getInstance().saveQuestion();
-		popup(error == null ? "Question saved" : error);
-		return null;
+		Question q = editorPanel.getCurrentQuestion();
+		String error = handler.saveQuestion(q);
+		if (error == null) {
+			popup("Question saved");
+			inputPanel.updateQuestionList(q.getQuiz().getQuestions(), true);
+		}
+		return error;
+	}
+
+	@Override
+	public void showQuestion(Question q) {
+		editorPanel.showQuestion(q);
 	}
 
 	@Override
@@ -83,14 +93,16 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 	}
 
 	@Override
-	public String newQuestion() {
-		popup("newQuestion");
-		return null;
+	public void newQuestion() {
+		editorPanel.clear();
+		inputPanel.clear();
 	}
 
 	@Override
-	public void changeQuiz(String quiz) {
-		popup(quiz);
+	public void quizWasSelected(String quiz) {
+		List<Question> questions = handler.getQuizByTitle(quiz).getQuestions();
+		if (questions != null)
+			inputPanel.updateQuestionList(questions, false);
 	}
 
 	private void popup(String text) {

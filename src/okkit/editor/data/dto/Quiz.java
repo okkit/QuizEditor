@@ -13,21 +13,24 @@ public class Quiz extends DataTransportObject{
 		this.title = title;
 	}
 	
-	public void addQuestion(String text) {
-		
+	public void addQuestion(String text) {		
 		addQuestion(new Question(text));
 	}
 	
-	public void addQuestion(Question question) {
-		
+	public void addQuestion(Question question) {		
 		if (questions == null)
 			questions = new ArrayList<Question>();
-		questions.add(question);			
+		questions.add(question);
+		question.setQuiz(this);
 	}
 	
 	public boolean hasQuestion(Question quest) {
+		System.out.println(quest);
 		if (questions == null)
 			return false;
+		for (Question question : questions) {
+			System.out.println(question);
+		}
 		return questions.contains(quest);
 	}
 
