@@ -107,7 +107,7 @@ public class EditorPanel extends AppSubPanel {
 		for (int i = 0; i < scoreRadioButtons.size(); i++) {
 			scoreRadioButtons.get(i).setSelected(q.getScore() == i + 1);
 		}
-		for (int i = 0; i < q.getAnswers().size(); i++) {
+		for (int i = 0; i < anserTextFields.size(); i++) {
 			anserTextFields.get(i).setText(q.getAnswers().get(i).getText());
 			anserCheckBoxes.get(i).setSelected(q.getAnswers().get(i).isCorrect());
 		}
@@ -137,20 +137,22 @@ public class EditorPanel extends AppSubPanel {
 	 */
 	public Question getCurrentQuestion() {
 		if (currentQuestion == null) {
-
 			currentQuestion = new Question();
-			currentQuestion.setText(questionArea.getText());
-
-			for (int i = 0; i < SCORE_NUMBER; i++) {
-				if (scoreRadioButtons.get(i).isSelected())
-					currentQuestion.setScore(scoreRadioButtons.get(i).getNumber());
-			}
-
-			for (int i = 0; i < ANSER_NUMBER; i++) {
-				currentQuestion.addAnswer(anserTextFields.get(i).getText(),
-						anserCheckBoxes.get(i).isSelected());
-			}
 		}
+		
+		currentQuestion.setText(questionArea.getText());
+
+		for (int i = 0; i < SCORE_NUMBER; i++) {
+			if (scoreRadioButtons.get(i).isSelected())
+				currentQuestion.setScore(scoreRadioButtons.get(i).getNumber());
+		}
+
+		currentQuestion.getAnswers().clear();
+		for (int i = 0; i < ANSER_NUMBER; i++) {
+			currentQuestion.addAnswer(anserTextFields.get(i).getText(),
+					anserCheckBoxes.get(i).isSelected());
+		}
+
 		return currentQuestion;
 	}
 

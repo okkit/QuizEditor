@@ -82,14 +82,18 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 
 	@Override
 	public String dublicateQuestion() {
-		popup("dublicateQuestion");
+		popup("Noch nicht implementiert");
 		return null;
 	}
 
 	@Override
 	public String deleteQuestion() {
-		popup("deleteQuestion");
-		return null;
+		String error = handler.deleteQuestion(editorPanel.getCurrentQuestion());
+		if (error == null) {
+			inputPanel.updateQuestionList(handler.currentQuiz.getQuestions(), true);
+			editorPanel.clear();
+		}
+		return error;
 	}
 
 	@Override
@@ -101,8 +105,10 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 	@Override
 	public void quizWasSelected(String quiz) {
 		List<Question> questions = handler.getQuizByTitle(quiz).getQuestions();
-		if (questions != null)
-			inputPanel.updateQuestionList(questions, false);
+		inputPanel.updateQuestionList(questions, false);
+
+		if (questions == null)
+			editorPanel.clear();
 	}
 
 	private void popup(String text) {

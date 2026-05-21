@@ -6,12 +6,11 @@ import okkit.editor.data.dto.Quiz;
 public class DataHandler {
 
 	public Quiz currentQuiz;
-//	public Question currentQuestion;
-	
+
 	public String[] getQuizTitleList() {
 		return QuizList.list;
 	}
-	
+
 	public Quiz getQuizByTitle(String title) {
 
 		if (currentQuiz != null) {
@@ -24,14 +23,18 @@ public class DataHandler {
 		return currentQuiz;
 	}
 
-	public Question dublicateQuestion(Question q){
+	public Question dublicateQuestion(Question q) {
+		// TODO 
 		return null;
 	}
-	
-	public Question deleteQuestion(Question q) {
-		return null;
+
+	public String deleteQuestion(Question q) {
+		if (q.getQuiz().getQuestions().remove(q))
+			return saveQuiz();
+		else
+			return "Fehler beim Löschen";
 	}
-	
+
 	public String saveQuestion(Question q) {
 		if (currentQuiz == null)
 			return "Zu welchem Quiz gehört die Frage?";
@@ -40,12 +43,6 @@ public class DataHandler {
 		return saveQuiz();
 	}
 
-//	public Question getCurrentQuestion() {
-//		if (currentQuestion == null)
-//			return createNewQuestion();
-//		return currentQuestion;
-//	}
-//	
 	private String saveQuiz() {
 		return Serializer.getInstance().saveQuiz(currentQuiz);
 	}

@@ -94,7 +94,9 @@ public class InputPanel extends AppSubPanel {
 	 */
 	public void updateQuestionList(List<Question> questions, boolean afterSave) {
 		questionListComboBox.removeAllItems();
-		if (questions != null) {
+		if (questions == null) {
+			questionListComboBox.setSelectedIndex(-1);
+		} else {
 			for (Question question : questions) {
 				questionListComboBox.addItem(question);
 			}
