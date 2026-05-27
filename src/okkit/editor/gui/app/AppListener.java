@@ -7,7 +7,7 @@ public interface AppListener {
 	public void quizWasSelected(String quiz);
 	public void showQuestion(Question q);
 	public void newQuestion();
-	public String saveQuestion();
-	public String dublicateQuestion();
-	public String deleteQuestion();
+	public void saveQuestion();
+	public void dublicateQuestion();
+	public void deleteQuestion();
 }

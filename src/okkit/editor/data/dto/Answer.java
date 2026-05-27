@@ -7,14 +7,16 @@ package okkit.editor.data.dto;
  * Die Klasse beschreibt das Objekt Answer.
  */
 public class Answer extends DataTransportObject{
-
+	
 	private String text;
 	private boolean correct;
+	
 	/**
-	 * Instanz der Klasse Question.<br>
-	 * Die Klasse Question aggregiert die Klasse Answer.
+	 * This constructor is essential for JSON-Mapping
 	 */
-	private Question question; 
+	public Answer() {
+		super();
+	}
 
 	/**
 	 * Konstruiert eine Instanz der Klasse.<br>
@@ -57,13 +59,4 @@ public class Answer extends DataTransportObject{
 	public void setCorrect(boolean correct) {
 		this.correct = correct;
 	}
-
-	public Question getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
-
 }

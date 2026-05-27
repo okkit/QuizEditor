@@ -62,6 +62,7 @@ public class InputPanel extends AppSubPanel {
 		if (e.getStateChange() != ItemEvent.SELECTED)
 			return;
 		String title = (String) ((AppComboBox) e.getSource()).getSelectedItem();
+		System.out.println(title);
 		if (title == null)
 			return;
 		appListener.quizWasSelected(title);

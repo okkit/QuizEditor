@@ -1,14 +1,29 @@
-package okkit.editor.data;
+/**
+ * @author ValentinaTikko
+ */
+package okkit.editor.gui;
 
+import okkit.editor.data.AppJSONhandler;
+import okkit.editor.data.QuizList;
+import okkit.editor.data.QuizSaver;
 import okkit.editor.data.dto.Question;
 import okkit.editor.data.dto.Quiz;
 
+/**
+ * Die Klasse ist eine Schnittstelle zwischen den Daten- und der
+ * Gui-Swing-Schichten.<br>
+ */
 public class DataHandler {
 
 	public Quiz currentQuiz;
+	
+	private QuizSaver getSaver() {
+//		return Serializer.getInstance();
+		return AppJSONhandler.getInstance();
+	}
 
 	public String[] getQuizTitleList() {
-		return QuizList.list;
+		return QuizList.QUIZ_TITELS;
 	}
 
 	public Quiz getQuizByTitle(String title) {
@@ -17,19 +32,21 @@ public class DataHandler {
 			if (title.equals(currentQuiz.getTitle()))
 				return currentQuiz;
 		}
-		currentQuiz = Serializer.getInstance().loadQuiz(title);
+		
+		currentQuiz = getSaver().loadQuiz(title);
+
 		if (currentQuiz == null)
 			currentQuiz = new Quiz(title);
 		return currentQuiz;
 	}
 
 	public Question dublicateQuestion(Question q) {
-		// TODO 
+		// TODO
 		return null;
 	}
 
 	public String deleteQuestion(Question q) {
-		if (q.getQuiz().getQuestions().remove(q))
+		if (currentQuiz.getQuestions().remove(q))
 			return saveQuiz();
 		else
 			return "Fehler beim Löschen";
@@ -44,6 +61,7 @@ public class DataHandler {
 	}
 
 	private String saveQuiz() {
-		return Serializer.getInstance().saveQuiz(currentQuiz);
+
+		return getSaver().saveQuiz(currentQuiz);
 	}
 }

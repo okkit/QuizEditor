@@ -8,9 +8,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import okkit.editor.data.DataHandler;
 import okkit.editor.data.dto.Question;
 import okkit.editor.gui.Constants;
+import okkit.editor.gui.DataHandler;
 
 /**
  * Das Hauptpanel der Anwendung. Besteht aus drei separaten Panels.
@@ -65,14 +65,14 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 	}
 
 	@Override
-	public String saveQuestion() {
+	public void saveQuestion() {
 		Question q = editorPanel.getCurrentQuestion();
 		String error = handler.saveQuestion(q);
 		if (error == null) {
 			popup("Question saved");
-			inputPanel.updateQuestionList(q.getQuiz().getQuestions(), true);
-		}
-		return error;
+			inputPanel.updateQuestionList(handler.currentQuiz.getQuestions(), true);
+		} else
+			popup(error);
 	}
 
 	@Override
@@ -81,19 +81,18 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 	}
 
 	@Override
-	public String dublicateQuestion() {
+	public void dublicateQuestion() {
 		popup("Noch nicht implementiert");
-		return null;
 	}
 
 	@Override
-	public String deleteQuestion() {
+	public void deleteQuestion() {
 		String error = handler.deleteQuestion(editorPanel.getCurrentQuestion());
 		if (error == null) {
 			inputPanel.updateQuestionList(handler.currentQuiz.getQuestions(), true);
 			editorPanel.clear();
-		}
-		return error;
+		} else
+			popup(error);
 	}
 
 	@Override
@@ -104,11 +103,15 @@ public class RootPanel extends JPanel implements Constants, AppListener {
 
 	@Override
 	public void quizWasSelected(String quiz) {
-		List<Question> questions = handler.getQuizByTitle(quiz).getQuestions();
-		inputPanel.updateQuestionList(questions, false);
+		boolean update = handler.currentQuiz != null;
 
-		if (questions == null)
-			editorPanel.clear();
+		List<Question> questions = handler.getQuizByTitle(quiz).getQuestions();
+		if (update) {
+			inputPanel.updateQuestionList(questions, false);
+
+			if (questions == null)
+				editorPanel.clear();
+		}
 	}
 
 	private void popup(String text) {

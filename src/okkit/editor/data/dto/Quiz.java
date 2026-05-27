@@ -1,12 +1,25 @@
+/**
+ * @author ValentinaTikko
+ */
 package okkit.editor.data.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class represets a quiz object 
+ */
 public class Quiz extends DataTransportObject{
-
+	
 	private String title;
 	private List<Question> questions;
+	
+	/**
+	 * This constructor is essential for JSON-Mapping
+	 */
+	public Quiz() {
+		super();
+	}
 
 	public Quiz(String title) {
 		super();
@@ -21,7 +34,6 @@ public class Quiz extends DataTransportObject{
 		if (questions == null)
 			questions = new ArrayList<Question>();
 		questions.add(question);
-		question.setQuiz(this);
 	}
 	
 	public boolean hasQuestion(Question quest) {

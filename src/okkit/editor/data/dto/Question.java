@@ -1,10 +1,16 @@
+/**
+ * @author ValentinaTikko
+ */
 package okkit.editor.data.dto;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class represets a question object 
+ */
 public class Question extends DataTransportObject {
-
+	
 	private String text;
 	private int score;
 	/**
@@ -12,9 +18,10 @@ public class Question extends DataTransportObject {
 	 * bzw der Answer-Objekte.
 	 */
 	private List<Answer> answers = new ArrayList<Answer>();
-	private Quiz quiz;
 
-	// Standardkonstruktor
+	/**
+	 * This constructor is essential for JSON-Mapping
+	 */
 	public Question() {
 		super();
 		answers = new ArrayList<Answer>();
@@ -34,7 +41,6 @@ public class Question extends DataTransportObject {
 		if (answers == null)
 			answers = new ArrayList<Answer>();
 		answers.add(answer);
-		answer.setQuestion(this);
 	}
 	
 	public String toString() {
@@ -66,11 +72,11 @@ public class Question extends DataTransportObject {
 	}
 
 	
-	public void setQuiz(Quiz quiz) {
-		this.quiz = quiz;
-	}
-
-	public Quiz getQuiz() {
-		return quiz;
-	}
+//	public void setQuiz(Quiz quiz) {
+//		this.quiz = quiz;
+//	}
+//
+//	public Quiz getQuiz() {
+//		return quiz;
+//	}
 }
