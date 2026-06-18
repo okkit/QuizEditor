@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * The class represets a question object 
  */
-public class Question extends DataTransportObject {
+public class Question extends DataAccessObject {
 	
 	private String text;
 	private int score;

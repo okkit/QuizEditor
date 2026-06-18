@@ -6,7 +6,7 @@ package okkit.editor.data.dto;
 /**
  * Die Klasse beschreibt das Objekt Answer.
  */
-public class Answer extends DataTransportObject{
+public class Answer extends DataAccessObject{
 	
 	private String text;
 	private boolean correct;

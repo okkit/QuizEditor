@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * The class represets a quiz object 
  */
-public class Quiz extends DataTransportObject{
+public class Quiz extends DataAccessObject{
 	
 	private String title;
 	private List<Question> questions;
