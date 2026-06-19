@@ -3,14 +3,6 @@
  */
 package okkit.editor.data;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import org.json.JSONObject;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import okkit.editor.data.dto.Quiz;
 
 /**
@@ -43,19 +35,19 @@ public class AppJSONhandler extends QuizSaver {
 
 	@Override
 	public Quiz loadQuiz(String title) {
-
-		File file = new File(getFileName(title));
-		if (!file.exists())
-			return null;
-
-		ObjectMapper mapper = new ObjectMapper();
-
-		try {
-			Quiz quiz = mapper.readValue(file, Quiz.class);
-			return quiz;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//
+//		File file = new File(getFileName(title));
+//		if (!file.exists())
+//			return null;
+//
+//		ObjectMapper mapper = new ObjectMapper();
+//
+//		try {
+//			Quiz quiz = mapper.readValue(file, Quiz.class);
+//			return quiz;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		return null;
 	}
@@ -63,15 +55,15 @@ public class AppJSONhandler extends QuizSaver {
 	@Override
 	public String saveQuiz(Quiz quiz) {
 
-		JSONObject quizJSON = new JSONObject(quiz);
-
-		String fileName = getFileName(quiz.getTitle());
-		try (FileWriter file = new FileWriter(fileName)) {
-			file.write(quizJSON.toString());
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		JSONObject quizJSON = new JSONObject(quiz);
+//
+//		String fileName = getFileName(quiz.getTitle());
+//		try (FileWriter file = new FileWriter(fileName)) {
+//			file.write(quizJSON.toString());
+//			file.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		return null;
 	}
 }
